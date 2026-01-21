@@ -1,0 +1,358 @@
+/* =========================================================
+   IAEMP – GLOBAL DESIGN SYSTEM (FROZEN)
+   ========================================================= */
+
+/* ================= BRAND VARIABLES ================= */
+:root {
+  --iaemp-green: #1E8F4D;
+  --iaemp-green-dark: #167340;
+
+  --text-dark: #1F2933;
+  --text-muted: #6B7280;
+
+  --white: #FFFFFF;
+  --black: #000000;
+  --bg-light: #F8FAFC;
+
+  --header-height: 150px;
+  --logo-size: 156px;
+
+  --title-font-size: 2.5rem;
+  --subtitle-font-size: 1.05rem;
+}
+
+/* ================= RESET ================= */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  color: var(--text-dark);
+  background-color: var(--bg-light);
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Poppins', sans-serif;
+  color: var(--iaemp-green);
+  margin: 0;
+}
+
+p {
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.iaemp-top-header {
+  height: var(--header-height);
+  background-color: var(--white);
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+}
+
+.iaemp-top-inner {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.iaemp-header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.iaemp-logo {
+  height: var(--logo-size);
+  width: auto;
+}
+
+.iaemp-title h1 {
+  font-size: var(--title-font-size);
+  font-weight: 700;
+}
+
+.iaemp-title p {
+  font-size: var(--subtitle-font-size);
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
+
+.iaemp-nav {
+  background-color: var(--iaemp-green);
+}
+
+.iaemp-nav .nav-link {
+  color: var(--white);
+  font-weight: 600;
+  text-decoration: none;
+  padding: 10px 16px;
+  position: relative;
+}
+
+.iaemp-nav .nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 4px;
+  width: 0%;
+  height: 2px;
+  background-color: var(--white);
+  transition: width 0.25s ease;
+}
+
+.iaemp-nav .nav-link:hover::after {
+  width: 100%;
+}
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.hero-single {
+  position: relative;
+  height: 92vh;
+  overflow: hidden;
+  background-color: var(--black);
+}
+
+.hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(55%);
+}
+
+.hero-single::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+}
+
+.hero-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 20px;
+  z-index: 2;
+  color: var(--white);
+}
+
+.hero-content h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.hero-content p {
+  font-size: 1.2rem;
+  margin-top: 14px;
+  color: var(--white);
+}
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 12px 26px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background-color: var(--iaemp-green);
+  border: 2px solid var(--iaemp-green);
+  color: var(--white);
+}
+
+.btn-primary:hover {
+  background-color: var(--iaemp-green-dark);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  border: 2px solid var(--iaemp-green);
+  color: var(--iaemp-green);
+}
+
+.btn-secondary:hover {
+  background-color: var(--iaemp-green);
+  color: var(--white);
+}
+
+/* HERO CTA FIX */
+.hero-content .btn {
+  width: 100%;
+  max-width: 260px;
+}
+
+.hero-content .btn-primary {
+  margin-top: 20px;
+  margin-bottom: 14px;
+}
+
+/* =========================================================
+   CONTENT
+   ========================================================= */
+
+.intro-section {
+  margin: 80px 0 60px;
+}
+
+.info-card {
+  background: var(--white);
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+
+.info-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 45px rgba(0,0,0,0.15);
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+footer {
+  background-color: var(--black);
+  color: var(--white);
+  font-size: .85rem;
+  padding: 24px 0;
+  text-align: center;
+}
+
+/* =========================================================
+   RESPONSIVE — SINGLE SOURCE OF TRUTH
+   ========================================================= */
+
+/* ---------- MOBILE & TABLET ---------- */
+@media (max-width: 1024px) {
+
+  .iaemp-top-header {
+    height: auto;
+    padding: 12px 0;
+  }
+
+  .iaemp-top-inner {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .iaemp-header-left {
+    flex-direction: column;
+  }
+
+  .iaemp-logo {
+    height: 72px;
+  }
+
+  .iaemp-title h1 {
+    font-size: 1.5rem;
+  }
+
+  .iaemp-title p {
+    font-size: .85rem;
+  }
+
+  .hero-single {
+    height: 75vh;
+  }
+
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+
+  .hero-content p {
+    font-size: 1rem;
+  }
+
+  input,
+  select,
+  textarea,
+  button {
+    font-size: 16px;
+  }
+
+  table {
+    font-size: 13px;
+  }
+
+  th, td {
+    padding: 8px;
+    white-space: nowrap;
+  }
+}
+
+/* ---------- PHONES (PRIMARY TARGET ≥ 375px) ---------- */
+@media (max-width: 430px) {
+
+  .hero-single {
+    height: 70vh;
+  }
+
+  .hero-content h1 {
+    font-size: 1.8rem;
+  }
+
+  .hero-content p {
+    font-size: .95rem;
+  }
+}
+
+/* ---------- LEGACY SMALL PHONES (GRACEFUL) ---------- */
+@media (max-width: 360px) {
+
+  .hero-single {
+    height: 60vh;
+  }
+
+  .hero-content h1 {
+    font-size: 1.5rem;
+  }
+
+  .hero-content p {
+    font-size: .85rem;
+  }
+}
+
+/* =========================================================
+   LOGIN BUTTON
+   ========================================================= */
+
+.iaemp-login-dropdown .btn {
+  background-color: var(--iaemp-green);
+  color: var(--white);
+  border-radius: 999px;
+  padding: 8px 26px;
+  font-size: .95rem;
+}
+
+.iaemp-login-dropdown .dropdown-toggle::after {
+  display: none;
+}

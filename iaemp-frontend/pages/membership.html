@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>IAEMP Membership</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header id="site-header"></header>
+
+  <!-- MAIN CONTENT -->
+  <main class="container my-5">
+
+    <h1 class="mb-4">Become a Member</h1>
+
+    <p>
+      Join the Indian Association of Energy Management Professionals (IAEMP)
+      and be part of a national network of energy professionals contributing
+      to India’s clean energy future.
+    </p>
+
+    <hr class="my-4">
+
+    <!-- MEMBERSHIP BENEFITS -->
+    <h2 class="mb-3">Why Join IAEMP?</h2>
+    <ul>
+      <li>Professional networking with energy experts</li>
+      <li>Access to training programs and workshops</li>
+      <li>Participation in national energy initiatives</li>
+      <li>Access to publications and technical resources</li>
+      <li>Opportunities for consulting and collaboration</li>
+    </ul>
+
+    <hr class="my-4">
+
+    <!-- MEMBERSHIP FORM -->
+    <h2 class="mb-3">Membership Application Form</h2>
+
+    <form id="membershipForm">
+
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Full Name</label>
+          <input type="text" name="full_name" class="form-control" required>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Email Address</label>
+          <input type="email" name="email" class="form-control" required>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Phone Number</label>
+          <input type="text" name="phone" class="form-control" required>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Membership Type</label>
+          <select name="membership_type" class="form-select" required>
+            <option value="">Select Membership Type</option>
+            <option value="Professional">Professional</option>
+            <option value="Student">Student</option>
+            <option value="Corporate">Corporate</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Organization (Optional)</label>
+        <input type="text" name="organization" class="form-control">
+      </div>
+
+      <button type="submit" class="btn btn-primary">
+        Submit Application
+      </button>
+
+    </form>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer id="site-footer"></footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Custom JS -->
+  <script src="../assets/js/main.js"></script>
+
+  <!-- MEMBERSHIP FORM SCRIPT -->
+  <script>
+    const membershipForm = document.getElementById("membershipForm");
+
+    membershipForm.addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const formData = new FormData(membershipForm);
+
+      const response = await fetch("/api/membership", {
+        method: "POST",
+        body: formData
+      });
+
+      if (response.ok) {
+        alert("Membership application submitted successfully!");
+        membershipForm.reset();
+      } else {
+        alert("Error submitting membership form. Please try again.");
+      }
+    });
+  </script>
+
+</body>
+</html>
