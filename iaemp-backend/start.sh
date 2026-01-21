@@ -1,11 +1,11 @@
 #!/bin/sh
 set -e
 
-echo "⏳ Waiting for PostgreSQL..."
+echo "â³ Waiting for PostgreSQL..."
 sleep 5
 
-echo "📦 Running Alembic migrations..."
+echo "ðŸ“¦ Running Alembic migrations..."
 alembic upgrade head
 
-echo "🚀 Starting FastAPI server..."
+echo "ðŸš€ Starting FastAPI server..."
 exec uvicorn app.main:app --host 0.0.0.0 --port 8000
