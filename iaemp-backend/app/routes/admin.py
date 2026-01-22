@@ -1,13 +1,12 @@
-from fastapi import APIRouter, Depends, Response, Form, HTTPException
-from sqlalchemy.orm import sessionmaker
+from fastapi import APIRouter, Depends, Response, HTTPException, status
+from sqlalchemy.orm import Session
+from pydantic import BaseModel
 
-from app.database import engine
+from app.database import SessionLocal
 from app.models import Admin, ContactMessage, Membership
 from app.core.security import verify_password
 from app.core.jwt import create_access_token
 from app.core.deps import admin_required
-
-SessionLocal = sessionmaker(bind=engine)
 
 router = APIRouter(
     prefix="/api/admin",
@@ -15,18 +14,26 @@ router = APIRouter(
 )
 
 # ===============================
-# ADMIN LOGIN (PUBLIC)
+# SCHEMA
+# ===============================
+class LoginRequest(BaseModel):
+    email: str
+    password: str
+
+# ===============================
+# ADMIN LOGIN (JSON)
 # ===============================
 @router.post("/login")
-def admin_login(
-    response: Response,
-    email: str = Form(...),
-    password: str = Form(...)
-):
-    db = SessionLocal()
-    admin = db.query(Admin).filter(Admin.email == email).first()
+def admin_login(payload: LoginRequest, response: Response):
+    db: Session = SessionLocal()
 
-    if not admin or not verify_password(password, admin.password_hash):
+    admin = db.query(Admin).filter(Admin.email == payload.email).first()
+
+    if not admin:
+        db.close()
+        raise HTTPException(status_code=401, detail="Invalid credentials")
+
+    if not verify_password(payload.password, admin.password_hash):
         db.close()
         raise HTTPException(status_code=401, detail="Invalid credentials")
 
@@ -43,25 +50,15 @@ def admin_login(
     db.close()
     return {"message": "login successful"}
 
-
 # ===============================
-# ADMIN AUTH CHECK
+# AUTH CHECK
 # ===============================
 @router.get("/me")
 def admin_me(admin_email: str = Depends(admin_required)):
     return {"email": admin_email}
 
-
 # ===============================
-# ADMIN DASHBOARD (TEST)
-# ===============================
-@router.get("/dashboard")
-def admin_dashboard(admin_email: str = Depends(admin_required)):
-    return {"message": "admin access granted"}
-
-
-# ===============================
-# ADMIN DATA
+# DATA
 # ===============================
 @router.get("/contacts")
 def admin_contacts(admin_email: str = Depends(admin_required)):
@@ -70,7 +67,6 @@ def admin_contacts(admin_email: str = Depends(admin_required)):
     db.close()
     return data
 
-
 @router.get("/memberships")
 def admin_memberships(admin_email: str = Depends(admin_required)):
     db = SessionLocal()
@@ -78,14 +74,10 @@ def admin_memberships(admin_email: str = Depends(admin_required)):
     db.close()
     return data
 
-
 # ===============================
-# ADMIN LOGOUT
+# LOGOUT
 # ===============================
 @router.post("/logout")
 def admin_logout(response: Response):
-    response.delete_cookie(
-        key="admin_token",
-        path="/"
-    )
+    response.delete_cookie(key="admin_token", path="/")
     return {"message": "logged out"}

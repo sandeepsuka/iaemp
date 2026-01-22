@@ -1,5 +1,5 @@
 # ===============================
-# ENV (MUST BE FIRST)
+# ENV
 # ===============================
 from dotenv import load_dotenv
 load_dotenv()
@@ -25,12 +25,12 @@ app = FastAPI(
 )
 
 # ===============================
-# REGISTER ROUTES
+# ROUTES
 # ===============================
 app.include_router(admin_router)
 
 # ===============================
-# CORS (NGINX + COOKIES)
+# CORS (COOKIES SAFE)
 # ===============================
 app.add_middleware(
     CORSMiddleware,
@@ -53,7 +53,7 @@ def health():
     return {"status": "ok"}
 
 # ===============================
-# CONTACT FORM
+# CONTACT FORM (FORM OK)
 # ===============================
 @app.post("/api/contact")
 def submit_contact(
@@ -68,7 +68,7 @@ def submit_contact(
     return {"message": "submitted"}
 
 # ===============================
-# MEMBERSHIP FORM
+# MEMBERSHIP FORM (FORM OK)
 # ===============================
 @app.post("/api/membership")
 def submit_membership(

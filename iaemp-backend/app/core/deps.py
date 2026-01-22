@@ -1,6 +1,8 @@
 from fastapi import Request, HTTPException, status
 from jose import jwt, JWTError
+
 from app.core.jwt import SECRET_KEY, ALGORITHM
+
 
 def admin_required(request: Request):
     token = request.cookies.get("admin_token")
