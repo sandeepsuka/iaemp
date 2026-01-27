@@ -13,18 +13,9 @@ pipeline {
       }
     }
 
-    stage('DEBUG — List workspace') {
-      steps {
-        powershell 'pwd'
-        powershell 'dir'
-        powershell 'dir iaemp'
-        powershell 'dir iaemp\\k8s'
-      }
-    }
-
     stage('Build Backend Image') {
       steps {
-        dir('iaemp/iaemp-backend') {
+        dir('iaemp-backend') {
           powershell 'docker build -t iaemp-backend-ci .'
         }
       }
@@ -38,8 +29,10 @@ pipeline {
 
     stage('Deploy to Kubernetes') {
       steps {
-        powershell 'kubectl apply -f iaemp/k8s/backend-deployment.yaml'
-        powershell 'kubectl apply -f iaemp/k8s/backend-hpa.yaml'
+        powershell 'kubectl apply -f k8s/backend-deployment.yaml'
+        powershell 'kubectl apply -f k8s/backend-service.yaml'
+        powershell 'kubectl apply -f k8s/backend-hpa.yaml'
+        powershell 'kubectl apply -f k8s/backend-ingress.yaml'
         powershell 'kubectl rollout restart deployment iaemp-backend'
       }
     }
