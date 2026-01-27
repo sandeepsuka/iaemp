@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: iaemp-backend-ingress
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: iaemp.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: iaemp-backend
+                port:
+                  number: 8000

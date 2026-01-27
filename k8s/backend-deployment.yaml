@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: iaemp-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: iaemp-backend
+  template:
+    metadata:
+      labels:
+        app: iaemp-backend
+    spec:
+      containers:
+        - name: backend
+          image: iaemp-backend-ci
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+
+          env:
+            - name: DB_HOST
+              value: db
+            - name: DB_PORT
+              value: "5432"
+            - name: DB_NAME
+              value: iaemp_db
+            - name: DB_USER
+              value: postgres
+            - name: DB_PASSWORD
+              value: postgres
+            - name: SECRET_KEY
+              value: iaemp_super_long_random_secret_change_this
+
+          # ===============================
+          # RESOURCE MANAGEMENT (PRODUCTION)
+          
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+
+          # ===============================
+          # HEALTH PROBES
+          
+          livenessProbe:
+            httpGet:
+              path: /api/health
+              port: 8000
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 3
+
+          readinessProbe:
+            httpGet:
+              path: /api/health
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 2
+            failureThreshold: 3
