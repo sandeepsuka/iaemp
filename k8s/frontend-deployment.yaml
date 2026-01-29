@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: iaemp-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: iaemp-frontend
+  template:
+    metadata:
+      labels:
+        app: iaemp-frontend
+    spec:
+      containers:
+        - name: iaemp-frontend
+          image: iaemp-frontend:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
